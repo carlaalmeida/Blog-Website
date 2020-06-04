@@ -1,0 +1,47 @@
+<%- include("partials/header"); -%>
+
+<h1><%= title %></h1>
+<p>
+  <%# This outputs the content using line breaks, if the post has any %> <%-
+  content %>
+</p>
+<hr />
+<div class="comments">
+  <h3>Comments</h3>
+
+  <% comments.forEach(comment => { %>
+  <div class="card">
+    <div class="card-header">
+      <span><%=comment.user%></span> said:
+      <span class="comment-date"><%=comment.date.toLocaleString() %></span>
+    </div>
+    <div class="card-body">
+      <p class="card-text"><%=comment.content%></p>
+    </div>
+  </div>
+  <%});%>
+
+  <hr />
+  <form method="post" action="/comment">
+    <h4>Leave your comment here</h4>
+    <div class="form-group">
+      <label for="userName">Your name:</label>
+      <input id="userName" class="form-control" type="text" name="userName" />
+    </div>
+
+    <div class="form-group">
+      <label for="userEmail">Your email:</label>
+      <input id="userEmail" class="form-control" type="email" name="userEmail" />
+    </div>
+
+    <div class="form-group">
+      <label for="comment">Your message:</label>
+      <textarea id="comment" class="form-control" name="comment" cols="80" rows="5"></textarea>
+    </div>
+
+    <input type="hidden" name="postId" value="<%=id%>" />
+    <button class="btn btn-primary" type="submit">Post</button>
+  </form>
+</div>
+
+<%- include("partials/footer"); -%>
