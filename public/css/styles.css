@@ -31,10 +31,21 @@ h1 {
   color: #1abc9c !important;
 }
 
+
 .card {
-  /* background-color: grey; */
+  background-color: #fafafa;
   margin-top: 25px;
   margin-bottom: 15px;
+}
+
+.card-header {
+  background: none;
+  border-bottom: none;
+}
+
+.card-body {
+  padding-top: 0;
+  padding-bottom: 0.75rem
 }
 
 .comment-box {
@@ -45,9 +56,18 @@ h1 {
   padding: 0 2rem 0.5rem;
 }
 
+.comment-username {
+  font-weight: bold;
+}
+
 .comment-date {
   position: absolute;
   right: 30px;
+  font-size: 0.9rem;
+}
+
+.comment-content {
+  margin-left: 15px
 }
 
 .footer-padding {

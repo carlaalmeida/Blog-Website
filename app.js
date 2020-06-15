@@ -122,33 +122,30 @@ app.post("/compose", function (req, res) {
 
 app.post("/comment", function (req, res) {
   const postId = req.body.postId;
-  Post.findById(postId, function (err, post) {
-    if (err) console.log(err);
-    else {
-      console.log(post.comments);
-      if (post.comments.length === 0) {
-        console.log("entrou no if");
-
-        post.comments = [
-          {
-            user: req.body.userName,
-            email: req.body.userEmail,
-            date: new Date(),
-            content: req.body.comment,
-          },
-        ];
-      } else {
-        post.comments.push({
-          user: req.body.userName,
-          email: req.body.userEmail,
-          date: new Date(),
-          content: req.body.comment,
-        });
-      }
-      post.save();
-    }
+  // Post.findById(postId, function (err, post) {
+  //   if (err) console.log(err);
+  //   else {
+  //     if (post.comments.length === 0) {
+  //       post.comments = [
+  //         {
+  //           user: req.body.userName,
+  //           email: req.body.userEmail,
+  //           date: new Date(),
+  //           content: req.body.comment,
+  //         },
+  //       ];
+  //     } else {
+  //       post.comments.push({
+  //         user: req.body.userName,
+  //         email: req.body.userEmail,
+  //         date: new Date(),
+  //         content: req.body.comment,
+  //       });
+  //     }
+  //     post.save();
+  //   }
     res.redirect("/posts/" + postId);
-  });
+  // });
 });
 
 app.listen(3000, function () {
