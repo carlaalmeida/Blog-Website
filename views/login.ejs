@@ -1,0 +1,28 @@
+<%- include("partials/header"); -%>
+
+<form class="form-signin" method="post" action="/login">
+  <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+  <label class="sr-only">Email address</label>
+  <input
+    type="text"
+    name="email"
+    class="form-control"
+    placeholder="Email address"
+    required
+    autofocus
+  />
+  <label class="sr-only">Password</label>
+  <input
+    type="password"
+    name="password"
+    class="form-control"
+    placeholder="Password"
+    required
+  />
+
+  <button class="btn btn-lg btn-primary btn-block" type="submit">
+    Login
+  </button>
+</form>
+
+<%- include("partials/footer"); -%>

@@ -1,0 +1,46 @@
+<%- include("partials/header"); -%>
+
+<form class="form-signin" method="post" action="/register">
+  <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+
+  <input
+    type="email"
+    name="email"
+    class="form-control"
+    placeholder="Email address"
+    required
+    autofocus
+  />
+
+  <input
+    type="text"
+    name="username"
+    class="form-control"
+    placeholder="Username"
+    required
+    autofocus
+  />
+
+  <input
+    type="password"
+    name="password"
+    class="form-control"
+    placeholder="Password"
+    required
+  />
+
+  <input
+    type="password"
+    class="form-control"
+    placeholder="Confirm Password"
+    required
+  />
+  <!-- <div class="checkbox mb-3">
+    <label> <input type="checkbox" value="remember-me" /> Remember me </label>
+  </div> -->
+  <button class="btn btn-lg btn-primary btn-block" type="submit">
+    Register
+  </button>
+</form>
+
+<%- include("partials/footer"); -%>
