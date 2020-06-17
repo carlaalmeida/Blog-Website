@@ -51,6 +51,7 @@ mongoose.set("useCreateIndex", true);
 const postSchema = new mongoose.Schema({
   title: String,
   content: String,
+  author: String,
   date: {
     type: Date,
     default: Date.now,
@@ -74,37 +75,11 @@ const userSchema = new mongoose.Schema({
   role: String,
 });
 
+// setting the usernameField to be email instead of username
 userSchema.plugin(passportLocalMongoose, { usernameField: "email" });
 
 const User = new mongoose.model("User", userSchema);
 
-// passport.use(User.createStrategy());
-
-// passport.use(
-//   new LocalStrategy(
-//     {
-//       usernameField: "email",
-//     },
-//     function (username, password, done) {
-//       console.log("Username: " + username);
-
-//       User.findOne({ email: username }, function (err, user) {
-//         if (err) {
-//           return done(err);
-//         }
-//         console.log(user);
-
-//         if (!user) {
-//           return done(null, false, { message: "Incorrect username." });
-//         }
-//         if (!user.validPassword(password)) {
-//           return done(null, false, { message: "Incorrect password." });
-//         }
-//         return done(null, user);
-//       });
-//     }
-//   )
-// );
 passport.use(User.createStrategy());
 
 passport.serializeUser(User.serializeUser());
@@ -118,32 +93,39 @@ app.get("/", function (req, res) {
       res.render("home", {
         homeStartingContent: homeStartingContent,
         posts: posts,
-        user: req.user
+        user: req.user,
+        pageTitle: "Home",
       });
     }
   }).sort({
     date: -1,
   });
-  
 });
 
 app.get("/about", function (req, res) {
   res.render("about", {
     aboutContent: aboutContent,
-    user: req.user
+    user: req.user,
+    pageTitle: "About Us",
   });
 });
 
 app.get("/contact", function (req, res) {
   res.render("contact", {
     contactContent: contactContent,
-    user: req.user
+    user: req.user,
+    pageTitle: "Contact Us",
   });
 });
 
-app.get("/compose", function (req, res) {
+app.get("/compose", function (req, res, next) {
   if (req.isAuthenticated()) {
-    res.render("compose", {user: req.user});
+    if (req.user.role === "author") {
+      res.render("compose", { user: req.user, pageTitle: "Compose" });
+    } else {
+      res.status(403);
+      res.render("errors/403", { pageTitle: "403: Forbidden", user: req.user });
+    }
   } else {
     res.redirect("/login");
   }
@@ -155,29 +137,39 @@ app.get("/posts/:postId", function (req, res) {
     if (err) {
       console.log(err);
     } else {
+      console.log(req.user);
+
       res.render("post", {
         title: post.title,
         // regex replace to insert html line breaks
         content: post.content.replace(/(?:\r\n|\r|\n)/g, "<br>"),
+        date: post.date.toLocaleDateString("en-GB"),
         id: id,
+        author: post.author,
         comments: post.comments,
-        user: req.user
+        user: req.user,
+        pageTitle: post.title,
       });
     }
   });
 });
 
 app.get("/register", function (req, res) {
-  res.render("register", {user: null});
+  res.render("register", { user: null, pageTitle: "Register" });
 });
 
 app.get("/login", function (req, res) {
-  res.render("login", {user: null});
+  res.render("login", { user: null, pageTitle: "Login" });
 });
 
 app.get("/logout", function (req, res) {
   req.logout();
   res.redirect("/");
+});
+
+app.get("*", function (req, res) {
+  res.status(404);
+  res.render("errors/404", { pageTitle: "404: Not found", user: req.user });
 });
 
 app.post("/register", function (req, res) {
@@ -202,22 +194,17 @@ app.post("/register", function (req, res) {
 });
 
 app.post("/login", function (req, res) {
-  // ta a dar erro - não faz login problema está em serializar user
-  // teste com fpessoa@email.com 1234
   const user = new User({
     email: req.body.email,
     password: req.body.password,
   });
-
-  // req.login comes from passportjs
   req.login(user, function (err) {
     if (err) {
       console.log(err);
     } else {
-      // authenticate using the local strategy
-      // this creates a session for the user
-      passport.authenticate("local")(req, res, function () {
-        res.redirect("/compose");
+      passport.authenticate("local")(req, res, function () {       
+        if (req.user.role === "author") res.redirect("/compose");
+        else res.redirect("/");
       });
     }
   });
@@ -227,6 +214,7 @@ app.post("/compose", function (req, res) {
   const post = new Post({
     title: req.body.postTitle || "Untitled",
     content: req.body.postBody,
+    author: req.user.username,
   });
 
   post.save(function (err) {

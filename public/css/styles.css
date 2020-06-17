@@ -8,7 +8,7 @@ h1 {
   margin-bottom: 1rem;
 }
 
-/* Signup/Register */
+/* Register and Login */
 
 .form-signin {
   width: 100%;
@@ -49,6 +49,8 @@ h1 {
   padding-bottom: 70px;
 }
 
+/* Navbar */
+
 .navbar {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -80,6 +82,16 @@ h1 {
   padding-bottom: 0.75rem
 }
 
+/* Posts */
+.post-title {
+  margin-bottom: 0
+}
+
+.post-info {
+  font-size: .8rem;
+}
+
+/* Comments */
 .comment-box {
   background-color: #f8f9fa;
   border-radius: 15px;
@@ -102,6 +114,8 @@ h1 {
   margin-left: 15px
 }
 
+
+/* Footer */
 .footer-padding {
   padding: 60px 0;
 }
@@ -119,4 +133,9 @@ h1 {
   margin-top: 25px;
   font-size: 12px;
   color: #fff;
+}
+
+/* For error pages */
+.jumbotron {
+  background: none;
 }

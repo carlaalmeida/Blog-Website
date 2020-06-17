@@ -1,10 +1,12 @@
 <%- include("partials/header"); -%>
 
-<h1><%= title %></h1>
+<h1 class="post-title"><%= title %></h1>
+<p class="post-info"><%= date %></p>
 <p>
   <%# This outputs the content using line breaks, if the post has any %> <%-
   content %>
 </p>
+<p class="post-info">by <%= author %></p>
 <hr />
 <h3>Comments</h3>
 <div class="comments">
@@ -46,7 +48,7 @@
     <form method="post" action="/comment" class="needs-validation" novalidate>
       <div class="form-group">
         <label for="userName">Your name:</label>
-        <input id="userName" class="form-control" type="text" name="userName" required />
+        <input id="userName" class="form-control" type="text" name="userName" value="<%=user? user.username: null%>" required />
         <div class="invalid-feedback">
           Name is required.
         </div>
@@ -59,6 +61,7 @@
           class="form-control"
           type="email"
           name="userEmail"
+          value="<%=user? user.email: null%>"
           required
         />
         <div class="invalid-feedback">Email is required.</div>
