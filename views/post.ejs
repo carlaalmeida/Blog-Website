@@ -26,10 +26,10 @@
   <%});} else { %>
   <p>No comments yet.</p>
   <% }%>
-<!-- 
-  <hr /> -->
 
-  <p>
+  <hr />
+
+  <!-- <p>
     <a
       id="commentToggler"
       class="btn btn-outline-secondary"
@@ -41,10 +41,12 @@
       onclick="updateClass()"
       title="Add a comment"
     >
-      +
+      Post a comment
     </a>
-  </p>
-  <div id="commentForm" class="collapse">
+  </p> -->
+  <!-- <div id="commentForm" class="collapse"> -->
+
+    <h4>Post a comment</h4>
     <form method="post" action="/comment" class="needs-validation" novalidate>
       <div class="form-group">
         <label for="userName">Your name:</label>
@@ -84,7 +86,7 @@
       <button class="btn btn-primary" type="submit">Submit</button>
     </form>
   </div>
-</div>
+<!-- </div> -->
 
 
 <script>
