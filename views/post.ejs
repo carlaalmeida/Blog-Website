@@ -8,9 +8,12 @@
 </p>
 <p class="post-info">by <%= author %></p>
 <hr />
+
+<% if(comments.length>0) { %> 
+<div>
 <h3>Comments</h3>
 <div class="comments">
-  <% if(comments.length>0) { %> <% comments.forEach(comment => { %>
+  <% comments.forEach(comment => { %>
 
   <div class="card">
     <div class="card-header">
@@ -23,30 +26,14 @@
       <p class="card-text comment-content"><%=comment.content%></p>
     </div>
   </div>
-  <%});} else { %>
-  <p>No comments yet.</p>
-  <% }%>
+  <%}); %>
+
 
   <hr />
+</div>
+<% } %> 
 
-  <!-- <p>
-    <a
-      id="commentToggler"
-      class="btn btn-outline-secondary"
-      data-toggle="collapse"
-      href="#commentForm"
-      role="button"
-      aria-expanded="false"
-      aria-controls="collapseExample"
-      onclick="updateClass()"
-      title="Add a comment"
-    >
-      Post a comment
-    </a>
-  </p> -->
-  <!-- <div id="commentForm" class="collapse"> -->
-
-    <h4>Post a comment</h4>
+    <h4>Leave a comment</h4>
     <form method="post" action="/comment" class="needs-validation" novalidate>
       <div class="form-group">
         <label for="userName">Your name:</label>
