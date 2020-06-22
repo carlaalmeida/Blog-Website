@@ -19,6 +19,8 @@ const contactContent =
 
 const app = express();
 
+const port = process.env.PORT || 3000;
+
 app.set("view engine", "ejs");
 
 app.use(
@@ -223,13 +225,10 @@ app.post("/login", function (req, res) {
           console.log(err);
           res.redirect("/login");
         } else {
-          console.log("tudo OK");
           res.redirect("/");
         }
       });
-    } else {
-      console.log("ultimo else");
-      
+    } else {    
       req.flash("error", "Invalid user or password");
       res.redirect("/login");
     }
@@ -283,6 +282,6 @@ app.post("/comment", function (req, res) {
   });
 });
 
-app.listen(3000, function () {
-  console.log("Server started on port 3000");
+app.listen(port, function () {
+  console.log("Server started on port " + port);
 });

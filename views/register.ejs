@@ -18,10 +18,10 @@
     class="form-control"
     placeholder="Username"
     required
-    autofocus
   />
 
   <input
+    id="password"
     type="password"
     name="password"
     class="form-control"
@@ -30,18 +30,37 @@
   />
 
   <input
+    id="password-confirm"
     type="password"
     name="password-confirm"
     class="form-control"
     placeholder="Confirm Password"
     required
   />
-  <!-- <div class="checkbox mb-3">
-    <label> <input type="checkbox" value="remember-me" /> Remember me </label>
-  </div> -->
-  <button class="btn btn-lg btn-primary btn-block" type="submit" disabled title="Not available">
+
+  <button
+    class="btn btn-lg btn-primary btn-block"
+    type="submit"
+    onclick="return validatePwd()"
+    title="Not available"
+    disabled
+  >
     Register
   </button>
 </form>
 
+<script type="text/javascript">
+  /* This checks if the passwords match */
+  function validatePwd() {
+    var pwdInput = document.getElementById("password");
+    var confPwdInput = document.getElementById("password-confirm");
+
+    if (pwdInput.value !== confPwdInput.value) {
+      pwdInput.setCustomValidity("Passwords don't match!");
+    } else {
+      //ok
+      pwdInput.setCustomValidity("");
+    }
+  }
+</script>
 <%- include("partials/footer"); -%>
